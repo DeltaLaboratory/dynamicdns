@@ -1,6 +1,7 @@
 package dnsapi
 
 type API interface {
+	// ListZone lists all Zone that exist
 	ListZone() ([]Zone, error)
 	// List lists all DNS records that exist
 	List() ([]Record, error)
