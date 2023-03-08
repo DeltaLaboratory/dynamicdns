@@ -19,7 +19,7 @@ jobs:
       - uses: ko-build/setup-ko@v0.6
       - name: ko build
         env:
-          KO_DOCKER_REPO: ghcr.io/DeltaLaboratory
+          KO_DOCKER_REPO: ghcr.io/deltalaboratory
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ko build --platform=all -B -t latest -t ${{ github.sha }} -t ${{ github.ref_name }} .
 
@@ -35,6 +35,6 @@ jobs:
       - uses: ko-build/setup-ko@v0.6
       - name: ko build
         env:
-          KO_DOCKER_REPO: ghcr.io/DeltaLaboratory
+          KO_DOCKER_REPO: ghcr.io/deltalaboratory
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ko build --platform=all -B -t debug -t ${{ github.sha }} .
