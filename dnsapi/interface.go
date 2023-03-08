@@ -1,14 +1,13 @@
 package dnsapi
 
+type APICreator func(string) (*API, error)
+
 type API interface {
-	// ListZone lists all Zone that exist
-	ListZone() ([]Zone, error)
-	// List lists all DNS records that exist
-	List() ([]Record, error)
 	// Create creates new Record of Zone
 	Create(zoneID string, record Record) error
 	// Update updates Record of Zone
 	Update(zoneID string, record Record) error
+	Exists(zoneID string, record Record) bool
 }
 
 type Record struct {
@@ -19,7 +18,8 @@ type Record struct {
 	Name string
 	// Content is content of record, example: 93.184.216.34, maximum length is 255
 	Content string
-	// TTL is time-to-live value of record, example: 3600(60 minutes)
+	// TTL is time-to-live value of record, example: 3600(60 minutes), must be in 60 and 86400
+	// (-1 points to the auto-select value according to the DNS provider if provider supports)
 	TTL int
 }
 
