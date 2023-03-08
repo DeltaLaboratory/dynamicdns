@@ -72,7 +72,7 @@ func (s *service) Start() {
 			s.logger.Error().Err(err).Msg("failed to get IP")
 			continue
 		}
-		s.logger.Info().Str("IP", ip).Msg("ip to update")
+		s.logger.Info().Str("IP", ip).Msg("obtained IP")
 		record := dnsapi.Record{
 			Name:    s.config.RecordName,
 			Content: ip,
