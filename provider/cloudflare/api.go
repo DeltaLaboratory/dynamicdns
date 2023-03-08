@@ -25,12 +25,18 @@ func NewAPI(key string) (*dnsapi.API, error) {
 }
 
 func (api *API) verifyToken() error {
-	res, err := api.client.R().Get("user/tokens/verify")
+	response := new(baseResponse)
+	res, err := api.client.R().SetSuccessResult(response).
+		SetErrorResult(response).Get("user/tokens/verify")
 	if err != nil {
 		return fmt.Errorf("request could not be executed: %w", err)
 	}
 	if res.IsErrorState() {
-		return fmt.Errorf("invalid api token")
+		base := fmt.Errorf("request failed")
+		for _, v := range response.Errors {
+			base = fmt.Errorf("%w: [%d:%s]", base, v.Code, v.Message)
+		}
+		return base
 	}
 	return nil
 }
